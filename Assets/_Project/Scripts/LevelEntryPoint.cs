@@ -7,8 +7,9 @@ namespace MyCode
     {
         private readonly IFactoryService _factoryService;
         private readonly PlatfromGrid _platfromGrid;
+        private readonly IInputService _inputService;
 
-        public LevelEntryPoint(IFactoryService factoryService, PlatfromGrid platfromGrid)
+        public LevelEntryPoint(IFactoryService factoryService, PlatfromGrid platfromGrid, IInputService inputService)
         {
             _factoryService = factoryService;
             _platfromGrid = platfromGrid;
@@ -16,6 +17,7 @@ namespace MyCode
 
         public void Initialize()
         {
+            _inputService.Initialize();
             _platfromGrid.Initialize();
         }
     }

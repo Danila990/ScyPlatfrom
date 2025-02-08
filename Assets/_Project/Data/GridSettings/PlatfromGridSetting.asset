@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PlatformOffset>k__BackingField: 1.3
   GridLinesArray:
-  - Line: 000000000200000000000000
-  - Line: 020000000100000000000000
-  - Line: 000000000000000000000000
+  - Line: 00000000
+  - Line: 01000000
+  - Line: 02000000

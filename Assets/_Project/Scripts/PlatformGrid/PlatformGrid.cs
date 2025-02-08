@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace MyCode
@@ -34,6 +36,25 @@ namespace MyCode
                 throw new ArgumentException();
 
             return _platforms[platformIndex.x][platformIndex.y];
+        }
+
+        public List<Platform> GetAllPlatform(PlatformType targetType)
+        {
+            var foundPlatforms = _platforms
+            .SelectMany(platformArray => platformArray)
+            .Where(platform => platform.platformType == targetType)
+            .ToList();
+
+            return foundPlatforms;
+        }
+
+        public Platform GetPlayerPlatfrom()
+        {
+            var firstPlatform = _platforms
+            .SelectMany(platformArray => platformArray)
+            .FirstOrDefault(platform => platform.platformType == PlatformType.Player);
+
+            return firstPlatform;
         }
     }
 }
