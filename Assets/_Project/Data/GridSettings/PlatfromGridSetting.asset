@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16135ce784494a04999a74f9b2477bfa, type: 3}
   m_Name: PlatfromGridSetting
   m_EditorClassIdentifier: 
-  <PlatformOffset>k__BackingField: 2
+  <PlatformOffset>k__BackingField: 1.3
   GridLinesArray:
-  - Line: 00000000
+  - Line: 000000000200000000000000
+  - Line: 020000000100000000000000
+  - Line: 000000000000000000000000
