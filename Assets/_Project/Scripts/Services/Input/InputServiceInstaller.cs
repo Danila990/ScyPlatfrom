@@ -11,9 +11,9 @@ namespace MyCode
         public override void InstallBindings()
         {
             if(_isPc)
-                Container.Bind<IInputService>().To<PcInputService>().FromNew();
+                Container.Bind<IInputService>().To<PcInputService>().FromNewComponentOnNewGameObject().AsSingle();
             else
-                Container.Bind<IInputService>().To<MobileInputService>().FromNew();
+                Container.Bind<IInputService>().To<MobileInputService>().FromNewComponentOnNewGameObject().AsSingle();
         }
     }
 }

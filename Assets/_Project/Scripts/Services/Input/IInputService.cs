@@ -6,5 +6,6 @@ namespace MyCode.Services
     {
         public event Action<DirectionType> OnInputDirection;
         public void Initialize();
+        public void Update();
     }
 }

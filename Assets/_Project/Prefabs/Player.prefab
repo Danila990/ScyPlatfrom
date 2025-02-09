@@ -125,6 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c40420b206850e4c9024e276f78b03b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerMover: {fileID: 9000958440560312495}
+  _playerRotator: {fileID: 322063266690369432}
 --- !u!114 &9000958440560312495
 MonoBehaviour:
   m_ObjectHideFlags: 0

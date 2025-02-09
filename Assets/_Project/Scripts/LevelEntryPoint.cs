@@ -13,6 +13,7 @@ namespace MyCode
         {
             _factoryService = factoryService;
             _platfromGrid = platfromGrid;
+            _inputService = inputService;
         }
 
         public void Initialize()

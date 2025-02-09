@@ -5,13 +5,18 @@ using UnityEngine;
 
 namespace MyCode.Services
 {
-    public class MobileInputService : IInputService
+    public class MobileInputService : MonoBehaviour, IInputService
     {
         public event Action<DirectionType> OnInputDirection;
 
         public void Initialize()
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public void Update()
+        {
+            
         }
     }
 }
