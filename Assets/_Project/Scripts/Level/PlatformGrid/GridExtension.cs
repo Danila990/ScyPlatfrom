@@ -1,7 +1,7 @@
 using MyCode;
 using System.Collections.Generic;
 using UnityEngine;
-using static MyCode.PlatfromGridSetting;
+using static MyCode.LevelSetting;
 
 public static class GridExtension
 {

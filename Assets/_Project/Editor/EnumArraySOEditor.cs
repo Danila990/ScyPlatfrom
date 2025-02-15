@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using System;
 using UnityEditor;
 using UnityEngine;
-using static MyCode.PlatfromGridSetting;
+using static MyCode.LevelSetting;
 
 namespace MyCode 
 {
-    [CustomEditor(typeof(PlatfromGridSetting))]
+    [CustomEditor(typeof(LevelSetting))]
     public class EnumArraySOEditor : Editor
     {
-        private PlatfromGridSetting _gridSetting;
+        private LevelSetting _gridSetting;
 
         public override void OnInspectorGUI()
         {
-            _gridSetting = (PlatfromGridSetting)target;
+            _gridSetting = (LevelSetting)target;
             base.OnInspectorGUI();
             LabelFieldText();
 

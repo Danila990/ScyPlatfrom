@@ -7,11 +7,11 @@ namespace MyCode
     public class PlatfromGridCreator
     {
         private readonly IFactoryService _factoryService;
-        private readonly PlatfromGridSetting _setting;
+        private readonly LevelSetting _setting;
 
         private Platform[][] _platforms;
 
-        public PlatfromGridCreator(IFactoryService factoryService, PlatfromGridSetting setting)
+        public PlatfromGridCreator(IFactoryService factoryService, LevelSetting setting)
         {
             _factoryService = factoryService;
             _setting = setting;
@@ -19,8 +19,8 @@ namespace MyCode
 
         public void CreatePlatformGrid()
         {
-            PlatformType[][] platfromTypes = _setting.GetPlatformsType();
-            Vector2Int gridSize = CalcelateGridSize(platfromTypes);
+            PlatformType[][] platfromTypes = ConverGrid(_setting.GridLinesArray);
+            Vector2Int gridSize = CalculateGridSize(platfromTypes);
             float platformOffset = _setting.PlatformOffset;
             Vector3 spawnOffset = CalculateMiddleOffest(platformOffset, gridSize);
             Transform gridParrent = new GameObject("Grid").transform;
@@ -39,7 +39,21 @@ namespace MyCode
 
         public Platform[][] GetPlatformGrid() => _platforms;
         
-        private Vector2Int CalcelateGridSize(PlatformType[][] platfromTypes)
+        private PlatformType[][] ConverGrid(GridLine[] gridLines)
+        {
+            PlatformType[][] platforms = new PlatformType[gridLines.Length][];
+            for (int i = 0; i < gridLines.Length; i++)
+            {
+                platforms[i] = new PlatformType[gridLines[i].Line.Length];
+                for (int j = 0; j < gridLines[i].Line.Length; j++)
+                {
+                    platforms[i][j] = gridLines[i].Line[j];
+                }
+            }
+            return platforms;
+        }
+
+        private Vector2Int CalculateGridSize(PlatformType[][] platfromTypes)
         {
             int maxValue = platfromTypes.OrderByDescending(innerArray => innerArray.Length).First().Length;
 
