@@ -4,13 +4,13 @@ using VContainer.Unity;
 
 namespace MyCode
 {
-    public class EntryPoint : IInitializable
+    public class DemoEntryPoint : IInitializable
     {
         private readonly IFactoryService _factoryService;
         private readonly PlatfromGrid _platfromGrid;
         private readonly IInputService _inputService;
 
-        public EntryPoint(IFactoryService factoryService, PlatfromGrid platfromGrid, IInputService inputService)
+        public DemoEntryPoint(IFactoryService factoryService, PlatfromGrid platfromGrid, IInputService inputService)
         {
             _factoryService = factoryService;
             _platfromGrid = platfromGrid;
