@@ -1,6 +1,8 @@
 using MyCode.Services;
 using UnityEngine;
-using Zenject;
+using VContainer;
+using VContainer.Extensions;
+using VContainer.Unity;
 
 namespace MyCode
 {
@@ -8,12 +10,12 @@ namespace MyCode
     {
         [SerializeField] private bool _isPc = true;
 
-        public override void InstallBindings()
+        public override void Install(IContainerBuilder builder)
         {
-            if(_isPc)
-                Container.Bind<IInputService>().To<PcInputService>().FromNewComponentOnNewGameObject().AsSingle();
+            if (_isPc)
+                builder.RegisterComponentOnNewGameObject<PcInputService>(Lifetime.Singleton).As<IInputService>();
             else
-                Container.Bind<IInputService>().To<MobileInputService>().FromNewComponentOnNewGameObject().AsSingle();
+                builder.RegisterComponentOnNewGameObject<MobileInputService>(Lifetime.Singleton).As<IInputService>();
         }
     }
 }

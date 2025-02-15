@@ -1,6 +1,7 @@
 using MyCode.Services;
 using UnityEngine;
-using Zenject;
+using VContainer;
+using VContainer.Extensions;
 
 namespace MyCode
 {
@@ -8,9 +9,9 @@ namespace MyCode
     {
         [SerializeField] private DataService _dataService;
 
-        public override void InstallBindings()
+        public override void Install(IContainerBuilder builder)
         {
-            Container.Bind<IDataService>().To<DataService>().FromScriptableObject(_dataService).AsSingle();
+            builder.RegisterInstance<IDataService>(_dataService);
         }
     }
 }

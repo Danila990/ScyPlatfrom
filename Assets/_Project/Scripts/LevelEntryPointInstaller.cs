@@ -1,12 +1,14 @@
-using Zenject;
+using VContainer;
+using VContainer.Extensions;
+using VContainer.Unity;
 
 namespace MyCode
 {
     public class LevelEntryPointInstaller : MonoInstaller
     {
-        public override void InstallBindings()
+        public override void Install(IContainerBuilder builder)
         {
-            Container.BindInterfacesAndSelfTo<LevelEntryPoint>().AsSingle().NonLazy();
+            builder.Register<EntryPoint>(Lifetime.Singleton).AsImplementedInterfaces();
         }
     }
 }

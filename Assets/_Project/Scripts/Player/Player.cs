@@ -1,6 +1,6 @@
 using MyCode.Services;
 using UnityEngine;
-using Zenject;
+using VContainer;
 
 namespace MyCode
 {

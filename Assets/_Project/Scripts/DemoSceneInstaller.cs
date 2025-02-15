@@ -1,5 +1,6 @@
 using UnityEngine;
-using Zenject;
+using VContainer;
+using VContainer.Extensions;
 
 namespace MyCode
 {
@@ -7,16 +8,11 @@ namespace MyCode
     {
         [SerializeField] private PlatfromGridSetting _gridSetting;
 
-        public override void InstallBindings()
+        public override void Install(IContainerBuilder builder)
         {
-            BindGrid();
-        }
-
-        private void BindGrid()
-        {
-            Container.Bind<PlatfromGridSetting>().FromNewScriptableObject(_gridSetting).AsSingle();
-            Container.Bind<PlatfromGridCreator>().FromNew().AsSingle();
-            Container.Bind<PlatfromGrid>().FromNew().AsSingle();
+            builder.RegisterInstance(_gridSetting);
+            builder.Register<PlatfromGridCreator>(Lifetime.Singleton);
+            builder.Register<PlatfromGrid>(Lifetime.Singleton);
         }
     }
 }

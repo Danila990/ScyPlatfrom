@@ -1,10 +1,11 @@
 using MyCode.Services;
-using Zenject;
+using VContainer;
+using VContainer.Extensions;
 
 public class FactoryServiceInstaller : MonoInstaller
 {
-    public override void InstallBindings()
+    public override void Install(IContainerBuilder builder)
     {
-        Container.Bind<IFactoryService>().To<ZenjectFactoryService>().FromNew().AsSingle();
+        builder.Register<IFactoryService, ZenjectFactoryService>(Lifetime.Singleton);
     }
 }
