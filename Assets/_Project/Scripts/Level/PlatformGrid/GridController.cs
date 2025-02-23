@@ -1,3 +1,4 @@
+using MyCode.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,15 +6,15 @@ using UnityEngine;
 
 namespace MyCode
 {
-    public class PlatfromGrid
+    public class GridController
     {
-        private readonly PlatfromGridCreator _creator;
+        private readonly GridCreator _creator;
 
         private Platform[][] _platforms;
 
-        public PlatfromGrid(PlatfromGridCreator creator)
+        public GridController(IFactoryService factoryService, LevelSetting setting)
         {
-            _creator = creator;
+            _creator = new GridCreator(factoryService, setting);
         }
 
         public void Initialize()

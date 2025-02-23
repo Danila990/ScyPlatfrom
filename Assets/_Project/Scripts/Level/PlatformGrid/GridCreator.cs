@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace MyCode
 {
-    public class PlatfromGridCreator
+    public class GridCreator
     {
         private readonly IFactoryService _factoryService;
         private readonly LevelSetting _setting;
 
         private Platform[][] _platforms;
 
-        public PlatfromGridCreator(IFactoryService factoryService, LevelSetting setting)
+        public GridCreator(IFactoryService factoryService, LevelSetting setting)
         {
             _factoryService = factoryService;
             _setting = setting;

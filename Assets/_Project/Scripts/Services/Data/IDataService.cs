@@ -4,6 +4,6 @@ namespace MyCode.Services
 {
     public interface IDataService
     {
-        public T GetData<T>(string key) where T : Object;
+        public T Get<T>(string key) where T : Object;
     }
 }

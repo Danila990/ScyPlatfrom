@@ -6,21 +6,22 @@ namespace MyCode
 {
     public class DemoEntryPoint : IInitializable
     {
-        private readonly IFactoryService _factoryService;
-        private readonly PlatfromGrid _platfromGrid;
+        private readonly GridController _platfromGrid;
+        private readonly PlayerController _playerController;
         private readonly IInputService _inputService;
 
-        public DemoEntryPoint(IFactoryService factoryService, PlatfromGrid platfromGrid, IInputService inputService)
+        public DemoEntryPoint(GridController platfromGrid, IInputService inputService, PlayerController playerController)
         {
-            _factoryService = factoryService;
             _platfromGrid = platfromGrid;
             _inputService = inputService;
+            _playerController = playerController;
         }
 
         public void Initialize()
         {
             _inputService.Initialize();
             _platfromGrid.Initialize();
+            _playerController.Initialize();
         }
     }
 }

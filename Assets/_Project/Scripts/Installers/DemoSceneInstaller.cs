@@ -17,12 +17,17 @@ namespace MyCode.Installer
             RegisterData(builder);
             RegisterInputService(builder);
             RegisterGrid(builder);
+            RegisterPlayer(builder);
+        }
+
+        private void RegisterPlayer(IContainerBuilder builder)
+        {
+            builder.Register<PlayerController>(Lifetime.Singleton);
         }
 
         private void RegisterGrid(IContainerBuilder builder)
         {
-            builder.Register<PlatfromGridCreator>(Lifetime.Singleton);
-            builder.Register<PlatfromGrid>(Lifetime.Singleton);
+            builder.Register<GridController>(Lifetime.Singleton);
         }
 
         private void RegisterData(IContainerBuilder builder)

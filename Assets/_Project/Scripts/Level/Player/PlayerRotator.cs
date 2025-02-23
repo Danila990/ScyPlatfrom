@@ -21,7 +21,7 @@ namespace MyCode
 
         private void Start()
         {
-            RotateToDirection(currentDirection, true);
+            //RotateToDirection(currentDirection, true);
         }
 
         public void RotateToDirection(DirectionType typeDirection, bool isFast = false)

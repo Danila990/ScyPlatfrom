@@ -15,7 +15,7 @@ namespace MyCode.Services
 
         public override GameObject Create(string key, Vector3 position = default, Transform parent = null)
         {
-            var createObject = _objectResolver.Instantiate(_dataService.GetData<GameObject>(key));
+            var createObject = _objectResolver.Instantiate(_dataService.Get<GameObject>(key));
             createObject.transform.parent = parent;
             createObject.transform.position = position;
             return createObject;

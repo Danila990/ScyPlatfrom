@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97f52bf9699001a4b8d844ff4db2d70d, type: 3}
   m_Name: LevelSetting
   m_EditorClassIdentifier: 
-  <LevelDuration>k__BackingField: 11
+  <LevelDuration>k__BackingField: 20
   <PlatformOffset>k__BackingField: 2
   GridLinesArray:
   - Line: 0200000002000000
