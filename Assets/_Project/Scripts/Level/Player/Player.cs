@@ -1,6 +1,5 @@
 using MyCode.Services;
 using UnityEngine;
-using VContainer;
 
 namespace MyCode
 {
@@ -15,6 +14,7 @@ namespace MyCode
         {
             _playerMover ??= GetComponent<PlayerMover>();
             _playerRotator ??= GetComponent<PlayerRotator>();
+            _inputService = ServiceLocator.Get<InputServiceController>().InputService;
             _inputService.OnInputDirection += OnDirectionType;
         }
 
@@ -23,7 +23,6 @@ namespace MyCode
             _inputService.OnInputDirection -= OnDirectionType;
         }
 
-        [Inject]
         public void Construct(IInputService inputService)
         {
             _inputService = inputService;

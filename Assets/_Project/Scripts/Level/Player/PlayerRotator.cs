@@ -21,7 +21,7 @@ namespace MyCode
 
         private void Start()
         {
-            //RotateToDirection(currentDirection, true);
+            RotateToDirection(currentDirection, true);
         }
 
         public void RotateToDirection(DirectionType typeDirection, bool isFast = false)
@@ -30,6 +30,7 @@ namespace MyCode
             {
                 currentDirection = typeDirection;
                 Rotation(_directions[typeDirection], isFast);
+                return;
             }
                 
             throw new NullReferenceException($"null direction type");

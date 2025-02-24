@@ -479,35 +479,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1892033792}
-  - component: {fileID: 1892033791}
-  - component: {fileID: 1892033795}
-  - component: {fileID: 1892033794}
+  - component: {fileID: 1892033793}
   m_Layer: 0
-  m_Name: DemoScope
+  m_Name: LevelEntryPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1892033791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892033787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6512a9e9ac653df469590ff664e54c40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
-  _monoInstallers:
-  - {fileID: 1892033795}
-  - {fileID: 1892033794}
 --- !u!4 &1892033792
 Transform:
   m_ObjectHideFlags: 0
@@ -523,7 +502,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1892033794
+--- !u!114 &1892033793
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -532,24 +511,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1892033787}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c81d8b6b8433fb3428bd4faff3034c9a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cf94d5f31d7cad48b69dc44a5b36a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSetting: {fileID: 11400000, guid: 3aa176829a7c7a64f83720d31c21af42, type: 2}
-  _isPc: 1
---- !u!114 &1892033795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1892033787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cb47ea93293eeb4d86802110bd24449, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dataService: {fileID: 11400000, guid: 2352866ac997393498da181a4fb80ee8, type: 2}
+  _dataContainer: {fileID: 11400000, guid: 0cdecf51694c8c24289b9ffbd44e7a0b, type: 2}
+  _levelSetting: {fileID: 11400000, guid: 3aa176829a7c7a64f83720d31c21af42, type: 2}
 --- !u!1 &1950714601
 GameObject:
   m_ObjectHideFlags: 0
