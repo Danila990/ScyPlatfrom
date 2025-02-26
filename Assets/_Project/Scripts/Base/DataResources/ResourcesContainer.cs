@@ -7,8 +7,8 @@ using Unity.VisualScripting;
 
 namespace MyCode
 {
-    [CreateAssetMenu(menuName = "MyData/DataContainer", fileName = nameof(DataContainer))]
-    public class DataContainer : ScriptableObject
+    [CreateAssetMenu(menuName = "MyData/ResourcesContainer", fileName = nameof(ResourcesContainer))]
+    public class ResourcesContainer : ScriptableObject
     {
         [SerializeField] private Object[] _datas;
 

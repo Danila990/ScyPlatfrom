@@ -5,7 +5,7 @@ namespace MyCode
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] protected DataContainer _dataContainer;
+        [SerializeField] protected ResourcesContainer _dataContainer;
 
         protected virtual void Awake()
         {

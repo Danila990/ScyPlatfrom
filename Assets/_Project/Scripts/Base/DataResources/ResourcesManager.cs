@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -6,24 +5,24 @@ namespace MyCode
 {
     public static class ResourcesManager
     {
-        private static DataContainer _dataContainer;
+        public static ResourcesContainer ResourcesContainer { get; private set; }
 
-        public static void SetupContainer(DataContainer dataContainer)
+        public static void SetupContainer(ResourcesContainer resourcesContainer)
         {
-            _dataContainer = dataContainer;
+            ResourcesContainer = resourcesContainer;
         }
 
-        public static void ClearContainer() => _dataContainer = null;
+        public static void ClearContainer() => ResourcesContainer = null;
 
         public static T Get<T>(string key) where T : Object
         {
-            if (_dataContainer == null)
+            if (ResourcesContainer == null)
             {
-                Debug.LogError("DataContainer is not set");
+                Debug.LogError("ResourcesContainer is not set");
                 return null;
             }
 
-            var getObject = _dataContainer.Get<T>(key);
+            var getObject = ResourcesContainer.Get<T>(key);
             return getObject;
         }
 

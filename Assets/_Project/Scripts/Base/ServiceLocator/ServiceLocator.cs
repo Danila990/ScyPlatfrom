@@ -8,15 +8,28 @@
         {
             if (ServiceContainer != null)
                 return;
+
             ServiceContainer = new ServiceContainer();
         }
 
-        public static T Get<T>() where T : IService => ServiceContainer.Get<T>();
+        public static T Get<T>() where T : IService
+        {
+            return ServiceContainer.Get<T>();
+        }
 
-        public static void Register<T>(T service) where T : IService => ServiceContainer.Register(service);
+        public static void Register<T>(T service) where T : IService
+        {
+            ServiceContainer.Register(service);
+        }
 
-        public static void Unregister<T>() where T : IService => ServiceContainer.Unregister<T>();
+        public static void Unregister<T>() where T : IService
+        {
+            ServiceContainer.Unregister<T>();
+        }
 
-        public static void ClearContainer() => ServiceContainer.ClearContainer();
+        public static void ClearContainer()
+        {
+            ServiceContainer.ClearContainer();
+        }
     }
 }
