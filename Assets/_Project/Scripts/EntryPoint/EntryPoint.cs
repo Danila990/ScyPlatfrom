@@ -11,27 +11,32 @@ namespace MyCode
         {
             ResourcesManager.SetupContainer(_dataContainer);
             ServiceLocator.Initialize();
+            EventBus.Initialize();
         }
 
         protected virtual void Start()
         {
             Initialize();
-            ServiceLocatorRegister();
-            Create();
-            StartScene();
+            RegistControllers();
+            InitEventInvoke();
         }
 
+        private void InitEventInvoke()
+        {
+            EventContainer eventContainer = EventBus.EventContainer;
+            eventContainer.Invoke(ConstSignal.INITIALIZE);
+            eventContainer.Invoke(ConstSignal.INJECT_SERVICES);
+            eventContainer.Invoke(ConstSignal.START_GAME);
+        }
+
+        protected virtual void RegistControllers() { }
         protected virtual void Initialize() { }
 
-        protected virtual void ServiceLocatorRegister() { }
-
-        protected virtual void Create() { }
-        protected virtual void StartScene() { }
-
-        protected virtual void OnDestroy()
+        private void OnDestroy()
         {
             ServiceLocator.ClearContainer();
             ResourcesManager.ClearContainer();
+            EventBus.ClearContainer();
         }
     }
 }

@@ -12,45 +12,79 @@ namespace MyCode
         public void Subscribe<T>(Action<T> callback, int priority = 0)
         {
             string key = typeof(T).Name;
-            if (_signals.ContainsKey(key))
-                _signals[key].Add(new CallbackWithPriority(priority, callback));
-            else
-                _signals.Add(key, new List<CallbackWithPriority>() { new(priority, callback) });
-
-            _signals[key] = _signals[key].OrderByDescending(x => x.Priority).ToList();
+            AddSingal(key, callback, priority);
         }
+
+        public void Subscribe(string signalName, Action callback, int priority)
+        {
+            AddSingal(signalName, callback, priority);
+        }
+
 
         public void Invoke<T>(T signal)
         {
             string key = typeof(T).Name;
-            if (_signals.ContainsKey(key))
-            {
-                foreach (var obj in _signals[key])
-                {
-                    var callback = obj.Callback as Action<T>;
-                    callback?.Invoke(signal);
-                }
-            }
+            var invokeSignal = GetSignal(key) as Action<T>;
+            invokeSignal?.Invoke(signal);
+        }
+
+        public void Invoke(string signalName)
+        {
+            var invokeSignal = GetSignal(signalName) as Action;
+            invokeSignal?.Invoke();
         }
 
         public void Unsubscribe<T>(Action<T> callback)
         {
             string key = typeof(T).Name;
-            if (_signals.ContainsKey(key))
-            {
-                var callbackToDelete = _signals[key].FirstOrDefault(x => x.Callback.Equals(callback));
-                if (callbackToDelete != null)
-                {
-                    _signals[key].Remove(callbackToDelete);
-                }
-            }
-            else
-                Debug.LogErrorFormat("Trying to unsubscribe for not existing key! {0} ", key);
+            RemoveSingal(key, callback);
+        }
+
+        public void Unsubscribe(string signalName, Action callback)
+        {
+            RemoveSingal(signalName, callback);
         }
 
         public void ClearContainer()
         {
             _signals.Clear();
+        }
+
+        private object GetSignal(string signalName)
+        {
+            if (_signals.ContainsKey(signalName))
+            {
+                foreach (var obj in _signals[signalName])
+                {
+                    return obj.Callback;
+                }
+            }
+
+            return null;
+        }
+
+        private void AddSingal(string signalName, object callback, int priority)
+        {
+            if (_signals.ContainsKey(signalName))
+                _signals[signalName].Add(new CallbackWithPriority(priority, callback));
+            else
+                _signals.Add(signalName, new List<CallbackWithPriority>() { new(priority, callback) });
+
+            _signals[signalName] = _signals[signalName].OrderByDescending(x => x.Priority).ToList();
+        }
+
+        private void RemoveSingal(string signalName, object callback)
+        {
+            if (_signals.ContainsKey(signalName))
+            {
+                var callbackToDelete = _signals[signalName].FirstOrDefault(x => x.Callback.Equals(callback));
+                if (callbackToDelete != null)
+                {
+                    _signals[signalName].Remove(callbackToDelete);
+                }
+            }
+            else
+                Debug.LogErrorFormat("Remove Signal Error", signalName);
         }
     }
 }

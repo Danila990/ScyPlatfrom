@@ -18,25 +18,13 @@ namespace MyCode
             _playerController = new PlayerController();
         }
 
-        protected override void ServiceLocatorRegister()
+        protected override void RegistControllers()
         {
             ServiceContainer serviceContainer = ServiceLocator.ServiceContainer;
             serviceContainer.Register(_levelSetting);
             serviceContainer.Register(_gridController);
             serviceContainer.Register(_inputServiceController);
             serviceContainer.Register(_playerController);
-        }
-
-        protected override void Create()
-        {
-            _inputServiceController.CreateInputService(InputServiceType.Pc);
-            _gridController.CreateGrid();
-            _playerController.CreatePlayer();
-        }
-
-        protected override void StartScene()
-        {
-            
         }
     }
 }

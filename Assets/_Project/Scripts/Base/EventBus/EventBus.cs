@@ -4,26 +4,49 @@ namespace MyCode
 {
     public static class EventBus
     {
-        private static EventContainer _eventContainer;
+        public static EventContainer EventContainer { get; private set; }
+
+        public static void Initialize()
+        {
+            if (EventContainer != null)
+                return;
+
+            EventContainer = new EventContainer();
+        }
 
         public static void Subscribe<T>(Action<T> callback, int priority = 0)
         {
-            _eventContainer.Subscribe(callback, priority);
+            EventContainer.Subscribe(callback, priority);
+        }
+
+        public static void Subscribe(string signalName, Action callback, int priority = 0)
+        {
+            EventContainer.Subscribe(signalName, callback, priority);
         }
 
         public static void Invoke<T>(T signal)
         {
-            _eventContainer.Invoke(signal);
+            EventContainer.Invoke(signal);
+        }
+
+        public static void Invoke(string signalName)
+        {
+            EventContainer.Invoke(signalName);
         }
 
         public static void Unsubscribe<T>(Action<T> callback)
         {
-            _eventContainer.Unsubscribe(callback);
+            EventContainer.Unsubscribe(callback);
+        }
+
+        public static void Unsubscribe(string signalName, Action callback)
+        {
+            EventContainer.Unsubscribe(signalName, callback);
         }
 
         public static void ClearContainer() 
         {
-            _eventContainer.ClearContainer();
+            EventContainer.ClearContainer();
         }
     }
 }

@@ -6,18 +6,14 @@ namespace MyCode.Services
     {
         public IInputService InputService { get; private set; }
 
-        public void CreateInputService(InputServiceType inputServiceType)
+        public InputServiceController()
         {
-            switch (inputServiceType)
-            {
-                case InputServiceType.Pc:
-                    InputService = new GameObject(nameof(PcInputService)).AddComponent<PcInputService>();
-                    break;
+            EventBus.Subscribe(ConstSignal.INITIALIZE, OnInitInputService);
+        }
 
-                case InputServiceType.Mobile:
-                    InputService = new GameObject(nameof(MobileInputService)).AddComponent<MobileInputService>();
-                    break;
-            }
+        public void OnInitInputService()
+        {
+            
         }
     }
 }

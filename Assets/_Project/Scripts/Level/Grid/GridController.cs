@@ -15,9 +15,10 @@ namespace MyCode
         public GridController()
         {
             GridCreator = new GridCreator();
+            EventBus.Subscribe(ConstSignal.INITIALIZE, OnInitGrid, 10);
         }
 
-        public void CreateGrid()
+        public void OnInitGrid()
         {
             LevelSetting levelSetting = ServiceLocator.Get<LevelSetting>();
             _platforms = GridCreator.CreateGrid(levelSetting);
