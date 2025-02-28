@@ -34,9 +34,9 @@ namespace MyCode
 
         private void OnDestroy()
         {
-            ServiceLocator.ClearContainer();
-            ResourcesManager.ClearContainer();
-            EventBus.ClearContainer();
+            ServiceLocator.Clear();
+            ResourcesManager.Clear();
+            EventBus.Clear();
         }
     }
 }

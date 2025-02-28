@@ -31,5 +31,7 @@ namespace MyCode
 
             throw new NullReferenceException($"Find object Error: Name - {nameof(T)}, Key - {key}");
         }
+
+        public void Clear() => _cacheData.Clear();
     }
 }

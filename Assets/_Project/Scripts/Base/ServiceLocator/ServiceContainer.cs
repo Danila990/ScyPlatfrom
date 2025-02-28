@@ -46,9 +46,6 @@ namespace MyCode
             _services.Remove(key);
         }
 
-        public void ClearContainer()
-        {
-            _services?.Clear();
-        }
+        public void Clear() => _services?.Clear();
     }
 }

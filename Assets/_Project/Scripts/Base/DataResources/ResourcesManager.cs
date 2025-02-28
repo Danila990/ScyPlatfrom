@@ -12,7 +12,11 @@ namespace MyCode
             ResourcesContainer = resourcesContainer;
         }
 
-        public static void ClearContainer() => ResourcesContainer = null;
+        public static void Clear()
+        {
+            ResourcesContainer.Clear();
+            ResourcesContainer = null;
+        }
 
         public static T Get<T>(string key) where T : Object
         {

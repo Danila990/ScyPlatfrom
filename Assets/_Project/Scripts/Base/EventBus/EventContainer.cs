@@ -15,11 +15,7 @@ namespace MyCode
             AddSingal(key, callback, priority);
         }
 
-        public void Subscribe(string signalName, Action callback, int priority)
-        {
-            AddSingal(signalName, callback, priority);
-        }
-
+        public void Subscribe(string signalName, Action callback, int priority) => RemoveSingal(signalName, callback);
 
         public void Invoke<T>(T signal)
         {
@@ -40,15 +36,9 @@ namespace MyCode
             RemoveSingal(key, callback);
         }
 
-        public void Unsubscribe(string signalName, Action callback)
-        {
-            RemoveSingal(signalName, callback);
-        }
+        public void Unsubscribe(string signalName, Action callback) => RemoveSingal(signalName, callback);
 
-        public void ClearContainer()
-        {
-            _signals.Clear();
-        }
+        public void Clear() => _signals?.Clear();
 
         private object GetSignal(string signalName)
         {
