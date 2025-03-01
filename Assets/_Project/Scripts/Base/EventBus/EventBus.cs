@@ -7,14 +7,26 @@ namespace MyCode
 {
     public partial class EventBus
     {
-        private Dictionary<string, List<Signalnfo>> _signals = new Dictionary<string, List<Signalnfo>>();
+        private Dictionary<string, List<SignalInfo>> _signals;
 
         public static EventBus Instance { get; private set; }
 
         public static void Initialize()
         {
-            if (Instance == null)
-                Instance = new EventBus();
+            if (Instance != null)
+                return;
+
+            Instance = new EventBus();
+            Instance._signals = new Dictionary<string, List<SignalInfo>>()
+            {
+                {ConstSignal.INITIALIZE,new List<SignalInfo>() },
+                {ConstSignal.REGIST_SERVICES,new List<SignalInfo>() },
+                {ConstSignal.INJECT_SERVICES,new List<SignalInfo>() },
+                {ConstSignal.PLAY_GAME,new List<SignalInfo>() },
+                {ConstSignal.PAUSE_GAME,new List<SignalInfo>() },
+                {ConstSignal.START_GAME,new List<SignalInfo>() },
+                {ConstSignal.END_GAME,new List<SignalInfo>() },
+            };
         }
 
         public static void Subscribe<T>(Action<T> callback, int priority = 0) => Instance.SubscribeSignal(callback, priority);
@@ -83,9 +95,9 @@ namespace MyCode
         private void AddCalback(string signalName, object callback, int priority)
         {
             if (_signals.ContainsKey(signalName))
-                _signals[signalName].Add(new Signalnfo(priority, callback));
+                _signals[signalName].Add(new SignalInfo(priority, callback));
             else
-                _signals.Add(signalName, new List<Signalnfo>() { new(priority, callback) });
+                _signals.Add(signalName, new List<SignalInfo>() { new(priority, callback) });
 
             _signals[signalName] = _signals[signalName].OrderByDescending(x => x.Priority).ToList();
         }
