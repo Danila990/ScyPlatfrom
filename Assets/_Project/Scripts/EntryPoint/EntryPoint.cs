@@ -5,17 +5,18 @@ namespace MyCode
 {
     public class EntryPoint : MonoBehaviour
     {
-        [SerializeField] protected ResourcesContainer _dataContainer;
+        [SerializeField] protected FactoryContainer _dataContainer;
 
         protected virtual void Awake()
         {
-            ResourcesManager.SetupContainer(_dataContainer);
+            Factory.Initialize();
             ServiceLocator.Initialize();
             EventBus.Initialize();
         }
 
         protected virtual void Start()
         {
+            Factory.SetupContainer(_dataContainer);
             Initialize();
             RegistControllers();
             InitEventInvoke();
@@ -23,10 +24,10 @@ namespace MyCode
 
         private void InitEventInvoke()
         {
-            EventContainer eventContainer = EventBus.EventContainer;
-            eventContainer.Invoke(ConstSignal.INITIALIZE);
-            eventContainer.Invoke(ConstSignal.INJECT_SERVICES);
-            eventContainer.Invoke(ConstSignal.START_GAME);
+            EventBus eventBus = EventBus.Instance;
+            eventBus.InvokeSignal(ConstSignal.INITIALIZE);
+            eventBus.InvokeSignal(ConstSignal.INJECT_SERVICES);
+            eventBus.InvokeSignal(ConstSignal.START_GAME);
         }
 
         protected virtual void RegistControllers() { }
@@ -35,7 +36,7 @@ namespace MyCode
         private void OnDestroy()
         {
             ServiceLocator.Clear();
-            ResourcesManager.Clear();
+            Factory.Clear();
             EventBus.Clear();
         }
     }

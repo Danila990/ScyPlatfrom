@@ -20,7 +20,7 @@ namespace MyCode
                 {
                     string namePlatform = $"Platform_{platfromTypes[x][y]}";
                     Vector3 position = new Vector3(x * platformOffset, 0, y * platformOffset) - spawnOffset;
-                    platforms[x][y] = ResourcesManager.Create<Platform>(namePlatform, position, gridParrent);
+                    platforms[x][y] = Factory.Create<Platform>(namePlatform, position, gridParrent);
                 }
             }
             return platforms;

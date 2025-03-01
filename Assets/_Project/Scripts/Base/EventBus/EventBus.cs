@@ -1,29 +1,107 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace MyCode
 {
-    public static class EventBus
+    public partial class EventBus
     {
-        public static EventContainer EventContainer { get; private set; }
+        private Dictionary<string, List<Signalnfo>> _signals = new Dictionary<string, List<Signalnfo>>();
+
+        public static EventBus Instance { get; private set; }
 
         public static void Initialize()
         {
-            if (EventContainer == null)
-                EventContainer = new EventContainer();
+            if (Instance == null)
+                Instance = new EventBus();
         }
 
-        public static void Subscribe<T>(Action<T> callback, int priority = 0) => EventContainer.Subscribe(callback, priority);
+        public static void Subscribe<T>(Action<T> callback, int priority = 0) => Instance.SubscribeSignal(callback, priority);
+        public static void Subscribe(string signalName, Action callback, int priority = 0) => Instance.SubscribeSignal(signalName, callback, priority);
+        public static void Invoke<T>(T signal) => Instance.InvokeSignal(signal);
+        public static void Invoke(string signalName) => Instance.InvokeSignal(signalName);
+        public static void Unsubscribe<T>(Action<T> callback) => Instance.UnsubscribeSignal(callback);
+        public static void Unsubscribe(string signalName, Action callback) => Instance.UnsubscribeSignal(signalName, callback);
+        public static void Clear() => Instance.ClearSingals();
 
-        public static void Subscribe(string signalName, Action callback, int priority = 0) => EventContainer.Subscribe(signalName, callback, priority);
+        public void SubscribeSignal<T>(Action<T> callback, int priority = 0)
+        {
+            string key = typeof(T).Name;
+            AddCalback(key, callback, priority);
+        }
 
-        public static void Invoke<T>(T signal) => EventContainer.Invoke(signal);
+        public void SubscribeSignal(string signalName, Action callback, int priority) => AddCalback(signalName, callback, priority);
 
-        public static void Invoke(string signalName) => EventContainer.Invoke(signalName);
+        public void InvokeSignal<T>(T signal)
+        {
+            string key = typeof(T).Name;
+            foreach (var callback in GetCallbacks(key))
+            {
+                var invokeSignal = callback as Action<T>;
+                invokeSignal.Invoke(signal);
+            }
+        }
 
-        public static void Unsubscribe<T>(Action<T> callback) => EventContainer.Unsubscribe(callback);
+        public void InvokeSignal(string signalName)
+        {
+            foreach (var callback in GetCallbacks(signalName))
+            {
+                var invokeSignal = callback as Action;
+                invokeSignal.Invoke();
+            }
+        }
 
-        public static void Unsubscribe(string signalName, Action callback) => EventContainer.Unsubscribe(signalName, callback);
+        public void UnsubscribeSignal<T>(Action<T> callback)
+        {
+            string key = typeof(T).Name;
+            RemoveCallback(key, callback);
+        }
 
-        public static void Clear() => EventContainer.Clear();
+        public void UnsubscribeSignal(string signalName, Action callback)
+        {
+            RemoveCallback(signalName, callback);
+        }
+
+        public void ClearSingals() => _signals?.Clear();
+
+        private List<object> GetCallbacks(string signalName) 
+        {
+            List<object> calbacks = new List<object>();
+            if (_signals.ContainsKey(signalName))
+            {
+                foreach (var signalnfo in _signals[signalName])
+                    calbacks.Add(signalnfo.Callback);
+
+                return calbacks;
+            }
+
+            Debug.LogError($"Get Data Callback eror, not registed signal: Signal name - {signalName}");
+            return calbacks;
+        }
+
+        private void AddCalback(string signalName, object callback, int priority)
+        {
+            if (_signals.ContainsKey(signalName))
+                _signals[signalName].Add(new Signalnfo(priority, callback));
+            else
+                _signals.Add(signalName, new List<Signalnfo>() { new(priority, callback) });
+
+            _signals[signalName] = _signals[signalName].OrderByDescending(x => x.Priority).ToList();
+        }
+
+        private void RemoveCallback(string signalName, object callback)
+        {
+            if (_signals.ContainsKey(signalName))
+            {
+                var callbackToDelete = _signals[signalName].FirstOrDefault(x => x.Callback.Equals(callback));
+                if (callbackToDelete != null)
+                {
+                    _signals[signalName].Remove(callbackToDelete);
+                }
+            }
+            else
+                Debug.LogError($"Remove Signal Error: Signal name - {signalName}, Callback - {callback}");
+        }
     }
 }

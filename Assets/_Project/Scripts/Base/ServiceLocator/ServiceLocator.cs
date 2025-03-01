@@ -1,21 +1,59 @@
-﻿namespace MyCode
+﻿using System.Collections.Generic;
+using System;
+using UnityEngine;
+
+namespace MyCode
 {
-    public static class ServiceLocator
+    public class ServiceLocator
     {
-        public static ServiceContainer ServiceContainer { get; private set; }
+        private readonly Dictionary<string, IService> _services = new Dictionary<string, IService>();
+
+        public static ServiceLocator Instance { get; private set; }
 
         public static void Initialize()
         {
-            if (ServiceContainer == null)
-                ServiceContainer = new ServiceContainer();
+            if (Instance == null)
+                Instance = new ServiceLocator();
         }
 
-        public static T Get<T>() where T : IService => ServiceContainer.Get<T>();
+        public static T Get<T>() where T : IService => Instance.GetService<T>();
+        public static void Register<T>(T service) where T : IService => Instance.RegisterService(service);
+        public static void Unregister<T>() where T : IService => Instance.UnregisterService<T>();
+        public static void Clear() => Instance.ClearServices();
 
-        public static void Register<T>(T service) where T : IService => ServiceContainer.Register(service);
+        public T GetService<T>() where T : IService
+        {
+            string key = typeof(T).Name;
+            if (!_services.ContainsKey(key))
+                throw new NullReferenceException($"GetData Service Error, not registered service: Key - {key}, Type - {typeof(T)}");
 
-        public static void Unregister<T>() where T : IService => ServiceContainer.Unregister<T>();
+            return (T)_services[key];
+        }
 
-        public static void Clear() => ServiceContainer.Clear();
+        public void RegisterService<T>(T service) where T : IService
+        {
+            string key = typeof(T).Name;
+            if (_services.ContainsKey(key))
+            {
+                Debug.LogError($"Register Service Error, Dublicate service: Key - {key}, Type - {typeof(T)}.");
+                return;
+            }
+
+            _services.Add(key, service);
+        }
+
+        public void UnregisterService<T>() where T : IService
+        {
+            string key = typeof(T).Name;
+            if (!_services.ContainsKey(key))
+            {
+                Debug.LogError($"Unregister Service Erorr: Key - {key}, Type - {typeof(T)}.");
+                return;
+            }
+
+            _services.Remove(key);
+        }
+
+        public void ClearServices() => _services?.Clear();
     }
 }

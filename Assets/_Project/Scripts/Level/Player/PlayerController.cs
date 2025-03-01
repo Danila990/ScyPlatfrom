@@ -17,7 +17,7 @@ namespace MyCode
 
         public void CreatePlayer()
         {
-            Player = ResourcesManager.Create<Player>("Player");
+            Player = Factory.Create<Player>("Player");
         }
 
         /*public void Start()

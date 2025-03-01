@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e12ad5f02d20e8c4e8d655b3baa91355, type: 3}
-  m_Name: DataContainer
+  m_Script: {fileID: 11500000, guid: 6f20e30d67b73d74abe0d96f064cd486, type: 3}
+  m_Name: FactoryContainer
   m_EditorClassIdentifier: 
   _datas:
   - {fileID: 3629020247154203342, guid: dcc53973247f01f4c9a5b040bfc38170, type: 3}
