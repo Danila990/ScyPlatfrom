@@ -9,10 +9,10 @@ namespace MyCode.Services
         public InputServiceController()
         {
             EventBus eventBus = EventBus.Instance;
-            eventBus.SubscribeSignal(ConstSignal.INITIALIZE, OnInitInputService);
-            eventBus.SubscribeSignal(ConstSignal.START_GAME, OnStartGame);
-            eventBus.SubscribeSignal(ConstSignal.PLAY_GAME, OnPlayGame);
-            eventBus.SubscribeSignal(ConstSignal.PAUSE_GAME, OnPauseGame);
+            eventBus.Subscribe(ConstSignal.INITIALIZE, OnInitInputService);
+            eventBus.Subscribe(ConstSignal.START_GAME, OnStartGame);
+            eventBus.Subscribe(ConstSignal.PLAY_GAME, OnPlayGame);
+            eventBus.Subscribe(ConstSignal.PAUSE_GAME, OnPauseGame);
         }
 
         public void OnInitInputService()

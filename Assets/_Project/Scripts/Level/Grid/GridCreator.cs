@@ -21,7 +21,7 @@ namespace MyCode
                 {
                     string namePlatform = $"Platform_{platfromTypes[x][y]}";
                     Vector3 position = new Vector3(x * platformOffset, 0, y * platformOffset) - spawnOffset;
-                    Platform platform = factory.CreateObject<Platform>(namePlatform, position);
+                    Platform platform = factory.Create<Platform>(namePlatform, position);
                     platform.transform.parent = gridParrent;
                     platforms[x][y] = platform;
                 }

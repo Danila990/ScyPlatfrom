@@ -7,16 +7,9 @@ namespace MyCode
     {
         [SerializeField] protected FactoryContainer _dataContainer;
 
-        protected virtual void Awake()
-        {
-            Factory.Initialize();
-            ServiceLocator.Initialize();
-            EventBus.Initialize();
-        }
-
         protected virtual void Start()
         {
-            Factory.SetupContainer(_dataContainer);
+            Factory.Instance.SetupContainer(_dataContainer);
             Initialize();
             RegistControllers();
             InitEventInvoke();
@@ -25,9 +18,9 @@ namespace MyCode
         private void InitEventInvoke()
         {
             EventBus eventBus = EventBus.Instance;
-            eventBus.InvokeSignal(ConstSignal.INITIALIZE);
-            eventBus.InvokeSignal(ConstSignal.INJECT_SERVICES);
-            eventBus.InvokeSignal(ConstSignal.START_GAME);
+            eventBus.Invoke(ConstSignal.INITIALIZE);
+            eventBus.Invoke(ConstSignal.INJECT_SERVICES);
+            eventBus.Invoke(ConstSignal.START_GAME);
         }
 
         protected virtual void RegistControllers() { }
@@ -35,9 +28,9 @@ namespace MyCode
 
         private void OnDestroy()
         {
-            ServiceLocator.Clear();
-            Factory.Clear();
-            EventBus.Clear();
+            ServiceLocator.Instance.Clear();
+            Factory.Instance.Clear();
+            EventBus.Instance.Clear();
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MyCode
 {
-    public class PlayerRotator : MonoBehaviour
+    public class RotateComponent : MonoBehaviour
     {
         private readonly Dictionary<DirectionType, int> _directions = new Dictionary<DirectionType, int>()
         {
@@ -17,18 +17,21 @@ namespace MyCode
 
         [SerializeField] private float _rotateDuraction = 0.2f;
 
-        [field: SerializeField] public DirectionType currentDirection { get; private set; }
+        [field: SerializeField] public DirectionType CurrentDirection { get; private set; }
 
-        private void Start()
+
+        public void Setup(float rotateDuraction, DirectionType directionType)
         {
-            RotateToDirection(currentDirection, true);
+            _rotateDuraction = rotateDuraction;
+            CurrentDirection = directionType;
+            RotateToDirection(CurrentDirection, true);
         }
 
         public void RotateToDirection(DirectionType typeDirection, bool isFast = false)
         {
             if (_directions.ContainsKey(typeDirection))
             {
-                currentDirection = typeDirection;
+                CurrentDirection = typeDirection;
                 Rotation(_directions[typeDirection], isFast);
                 return;
             }

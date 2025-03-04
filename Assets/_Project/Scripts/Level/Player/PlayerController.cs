@@ -1,31 +1,54 @@
-using MyCode.Services;
 using UnityEngine;
 
 namespace MyCode
 {
     public class PlayerController : IService
     {
-        private readonly GridController _gridController;
-
         public Player Player { get; private set; }
         public Platform PlayerPlatfrom { get; private set; }
 
         public PlayerController()
         {
-            //_gridController = ServiceLocator.Get<GridController>();
+            EventBus eventBus = EventBus.Instance;
+            eventBus.Subscribe(ConstSignal.INITIALIZE, OnInitPlayer);
+            eventBus.Subscribe(ConstSignal.START_GAME, OnStartGame);
+            eventBus.Subscribe(ConstSignal.PLAY_GAME, OnPlayGame);
+            eventBus.Subscribe(ConstSignal.PAUSE_GAME, OnPauseGame);
+        }
+
+        public void OnInitPlayer()
+        {
+            CreatePlayer();
+            PlayerPlatfrom = ServiceLocator.Instance.Get<GridController>().GetPlayerPlatfrom();
+            SetupStartPlayerPos();
+        }
+
+        public void OnStartGame()
+        {
+            SetupStartPlayerPos();
+        }
+
+        public void OnPlayGame()
+        {
+
+        }
+
+        public void OnPauseGame()
+        {
+
         }
 
         public void CreatePlayer()
         {
-            Player = Factory.Create<Player>("Player");
+            Player = Factory.Instance.Create<Player>("Player");
+            Player.Initialize();
         }
 
-        /*public void Start()
+        private void SetupStartPlayerPos()
         {
-            PlayerPlatfrom = _gridController.GetPlayerPlatfrom();
             Vector3 spawnPoint = PlayerPlatfrom.transform.position;
             spawnPoint += new Vector3(0, 1, 0);
             Player.transform.position = spawnPoint;
-        }*/
+        }
     }
 }

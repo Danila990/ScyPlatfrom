@@ -4,7 +4,7 @@ using DG.Tweening;
 
 namespace MyCode
 {
-    public class PlayerMover : MonoBehaviour
+    public class MoveComponent : MonoBehaviour
     {
         public event Action OnMoveComplete;
         public event Action OnStopMove;
@@ -17,6 +17,11 @@ namespace MyCode
         public bool IsMove => _moveTween != null && _moveTween.active;
 
         private void OnDestroy() => _moveTween?.Kill();
+
+        public void SetupMoveDuration(float moveDuration)
+        {
+            _moveDuraction = moveDuration;
+        }
 
         public void StartMove(Vector3 target)
         {

@@ -21,10 +21,10 @@ namespace MyCode
         protected override void RegistControllers()
         {
             ServiceLocator serviceLocator = ServiceLocator.Instance;
-            serviceLocator.RegisterService(_levelSetting);
-            serviceLocator.RegisterService(_gridController);
-            serviceLocator.RegisterService(_inputServiceController);
-            serviceLocator.RegisterService(_playerController);
+            serviceLocator.Register(_levelSetting);
+            serviceLocator.Register(_gridController);
+            serviceLocator.Register(_inputServiceController);
+            serviceLocator.Register(_playerController);
         }
     }
 }

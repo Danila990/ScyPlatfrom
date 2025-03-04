@@ -1,19 +1,27 @@
 using MyCode.Services;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MyCode
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private PlayerMover _playerMover;
-        [SerializeField] private PlayerRotator _playerRotator;
+        [SerializeField] private float _moveDuraction = 0.5f;
+        [SerializeField] private float _rotateDuraction = 0.2f;
+        [SerializeField] private DirectionType _currentDirection;
 
-        private void Start()
+        private MoveComponent _playerMover;
+        private RotateComponent _playerRotator;
+        private GridController _gridController;
+
+        public void Initialize()
         {
-            _playerMover ??= GetComponent<PlayerMover>();
-            _playerRotator ??= GetComponent<PlayerRotator>();
-
-            EventBus.Subscribe<InputSignal>(OnInputSignal);
+            _playerMover = gameObject.AddComponent<MoveComponent>();
+            _playerRotator = gameObject.AddComponent<RotateComponent>();
+            _playerMover.SetupMoveDuration(_moveDuraction);
+            _playerRotator.Setup(_rotateDuraction, _currentDirection);
+            _gridController = ServiceLocator.Instance.Get<GridController>();
+            EventBus.Instance.Subscribe<InputSignal>(OnInputSignal);
         }
 
         private void OnInputSignal(InputSignal inputSignal)
@@ -21,12 +29,12 @@ namespace MyCode
             if(_playerMover.IsMove)
                 return;
 
-            StartMove(inputSignal.DirectionType);
+            StartMove(inputSignal);
         }
 
-        private void StartMove(DirectionType directionType)
+        private void StartMove(InputSignal directionType)
         {
-
+            //if(_gridController.GetPlatform()
         }
     }
 }
