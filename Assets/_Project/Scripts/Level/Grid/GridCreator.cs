@@ -7,6 +7,7 @@ namespace MyCode
     {
         public Platform[][] CreateGrid(LevelSetting levelSetting)
         {
+            Factory factory = Factory.Instance;
             PlatformType[][] platfromTypes = ConverGrid(levelSetting.GridLinesArray);
             Vector2Int gridSize = CalculateGridSize(platfromTypes);
             float platformOffset = levelSetting.PlatformOffset;
@@ -20,7 +21,9 @@ namespace MyCode
                 {
                     string namePlatform = $"Platform_{platfromTypes[x][y]}";
                     Vector3 position = new Vector3(x * platformOffset, 0, y * platformOffset) - spawnOffset;
-                    platforms[x][y] = Factory.Create<Platform>(namePlatform, position, gridParrent);
+                    Platform platform = factory.CreateObject<Platform>(namePlatform, position);
+                    platform.transform.parent = gridParrent;
+                    platforms[x][y] = platform;
                 }
             }
             return platforms;
