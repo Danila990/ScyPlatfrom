@@ -9,6 +9,7 @@ namespace MyCode
     {
         private Dictionary<string, List<SignalInfo>> _signals;
 
+        #region Static
         public static EventBus Instance { get; private set; }
 
         public static void Initialize()
@@ -36,6 +37,7 @@ namespace MyCode
         public static void Unsubscribe<T>(Action<T> callback) => Instance.UnsubscribeSignal(callback);
         public static void Unsubscribe(string signalName, Action callback) => Instance.UnsubscribeSignal(signalName, callback);
         public static void Clear() => Instance.ClearSingals();
+        #endregion
 
         public void SubscribeSignal<T>(Action<T> callback, int priority = 0)
         {
@@ -43,7 +45,10 @@ namespace MyCode
             AddCalback(key, callback, priority);
         }
 
-        public void SubscribeSignal(string signalName, Action callback, int priority) => AddCalback(signalName, callback, priority);
+        public void SubscribeSignal(string signalName, Action callback, int priority = 0)
+        {
+            AddCalback(signalName, callback, priority);
+        }
 
         public void InvokeSignal<T>(T signal)
         {

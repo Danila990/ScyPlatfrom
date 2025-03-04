@@ -8,6 +8,7 @@ namespace MyCode
     {
         private readonly Dictionary<string, IService> _services = new Dictionary<string, IService>();
 
+        #region Static
         public static ServiceLocator Instance { get; private set; }
 
         public static void Initialize()
@@ -20,6 +21,7 @@ namespace MyCode
         public static void Register<T>(T service) where T : IService => Instance.RegisterService(service);
         public static void Unregister<T>() where T : IService => Instance.UnregisterService<T>();
         public static void Clear() => Instance.ClearServices();
+        #endregion
 
         public T GetService<T>() where T : IService
         {

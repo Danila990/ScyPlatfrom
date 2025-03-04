@@ -8,32 +8,20 @@ namespace MyCode
         [SerializeField] private PlayerMover _playerMover;
         [SerializeField] private PlayerRotator _playerRotator;
 
-        private IInputService _inputService;
-
         private void Start()
         {
             _playerMover ??= GetComponent<PlayerMover>();
             _playerRotator ??= GetComponent<PlayerRotator>();
-            _inputService = ServiceLocator.Get<InputServiceController>().InputService;
-            _inputService.OnInputDirection += OnDirectionType;
+
+            EventBus.Subscribe<InputSignal>(OnInputSignal);
         }
 
-        private void OnDestroy()
-        {
-            _inputService.OnInputDirection -= OnDirectionType;
-        }
-
-        public void Construct(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
-
-        private void OnDirectionType(DirectionType directionType)
+        private void OnInputSignal(InputSignal inputSignal)
         {
             if(_playerMover.IsMove)
                 return;
 
-            StartMove(directionType);
+            StartMove(inputSignal.DirectionType);
         }
 
         private void StartMove(DirectionType directionType)

@@ -6,7 +6,7 @@ namespace MyCode
     public class Factory
     {
         private FactoryContainer _container;
-
+        #region Static
         public static Factory Instance { get; private set; }
 
         public static void Initialize()
@@ -24,7 +24,7 @@ namespace MyCode
         public static T Create<T>(string key, Vector3 position = default, bool activeState = true) where T : MonoBehaviour
             => Instance.CreateObject<T>(key, position, activeState);
         public static void Clear() => Instance.ClearContainer();
-
+        #endregion
         public T CreateObject<T>(string key, Vector3 position = default, bool activeState = true) where T : MonoBehaviour
         {
             var createObject = Object.Instantiate(_container.Get<T>(key));
