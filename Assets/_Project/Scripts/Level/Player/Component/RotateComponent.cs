@@ -19,11 +19,8 @@ namespace MyCode
 
         [field: SerializeField] public DirectionType CurrentDirection { get; private set; }
 
-
-        public void Setup(float rotateDuraction, DirectionType directionType)
+        private void Start()
         {
-            _rotateDuraction = rotateDuraction;
-            CurrentDirection = directionType;
             RotateToDirection(CurrentDirection, true);
         }
 

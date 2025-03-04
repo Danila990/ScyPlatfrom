@@ -2,12 +2,12 @@
 
 namespace MyCode
 {
-    public class InputSignal
+    public class MoveInfo
     {
         public readonly DirectionType DirectionType;
         public readonly Vector2Int Index;
 
-        public InputSignal(DirectionType directionType, Vector2Int index)
+        public MoveInfo(DirectionType directionType, Vector2Int index)
         {
             DirectionType = directionType;
             Index = index;

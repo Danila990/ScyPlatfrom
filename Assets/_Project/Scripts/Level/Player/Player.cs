@@ -1,40 +1,52 @@
-using MyCode.Services;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MyCode
 {
     public class Player : MonoBehaviour
     {
-        [SerializeField] private float _moveDuraction = 0.5f;
-        [SerializeField] private float _rotateDuraction = 0.2f;
-        [SerializeField] private DirectionType _currentDirection;
+        [SerializeField] private MoveComponent _playerMover;
+        [SerializeField] private RotateComponent _playerRotator;
 
-        private MoveComponent _playerMover;
-        private RotateComponent _playerRotator;
-        private GridController _gridController;
+        private Grid _gridController;
+        private Vector2Int _currentIndex;
+        private DirectionType _nextDirectionType;
 
-        public void Initialize()
+        public void Initialize(Vector2Int playerIndex)
         {
-            _playerMover = gameObject.AddComponent<MoveComponent>();
-            _playerRotator = gameObject.AddComponent<RotateComponent>();
-            _playerMover.SetupMoveDuration(_moveDuraction);
-            _playerRotator.Setup(_rotateDuraction, _currentDirection);
-            _gridController = ServiceLocator.Instance.Get<GridController>();
-            EventBus.Instance.Subscribe<InputSignal>(OnInputSignal);
+            _playerMover ??= GetComponent<MoveComponent>();
+            _playerRotator ??= GetComponent<RotateComponent>();
+            _nextDirectionType = _playerRotator.CurrentDirection;
+            _gridController = ServiceLocator.Instance.Get<Grid>();
+            _currentIndex = playerIndex;
+            EventBus.Instance.Subscribe<MoveInfo>(OnInputSignal);
+            _playerMover.OnMoveComplete += OnMoveComplete;
         }
 
-        private void OnInputSignal(InputSignal inputSignal)
+        private void OnInputSignal(MoveInfo moveInfo)
         {
-            if(_playerMover.IsMove)
+            StartMove(moveInfo);
+        }
+
+        private void OnMoveComplete()
+        {
+            MoveInfo moveInfo = new MoveInfo(_nextDirectionType, _nextDirectionType.ConvertToGridVector());
+            StartMove(moveInfo);
+        }
+
+        private void StartMove(MoveInfo moveInfo)
+        {
+            _nextDirectionType = moveInfo.DirectionType;
+            if (_playerMover.IsMove)
                 return;
 
-            StartMove(inputSignal);
-        }
-
-        private void StartMove(InputSignal directionType)
-        {
-            //if(_gridController.GetPlatform()
+            Vector2Int nextIndex = _currentIndex + moveInfo.Index;
+            if (_gridController.CheckPlatform(nextIndex))
+            {
+                Platform platform = _gridController.GetPlatform(nextIndex);
+                _playerRotator.RotateToDirection(_nextDirectionType);
+                _playerMover.StartMove(platform.transform.position);
+                _currentIndex = nextIndex;
+            }
         }
     }
 }

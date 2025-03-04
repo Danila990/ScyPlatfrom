@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace MyCode.Services
+namespace MyCode
 {
-    public class InputServiceController : IService
+    public class InputSystem : IService
     {
-        public IInputService InputService { get; private set; }
+        public IInputService Service { get; private set; }
 
-        public InputServiceController()
+        public InputSystem()
         {
             EventBus eventBus = EventBus.Instance;
             eventBus.Subscribe(ConstSignal.INITIALIZE, OnInitInputService);
@@ -17,24 +17,24 @@ namespace MyCode.Services
 
         public void OnInitInputService()
         {
-            InputService = new GameObject("InputService").AddComponent<PcInputService>();
-            InputService.Initialize();
-            InputService.Deactivate();
+            Service = new GameObject("Service").AddComponent<PcInputService>();
+            Service.Initialize();
+            Service.Deactivate();
         }
 
         public void OnStartGame()
         {
-            InputService.Activate();
+            Service.Activate();
         }
 
         public void OnPlayGame()
         {
-            InputService.Activate();
+            Service.Activate();
         }
 
         public void OnPauseGame()
         {
-            InputService.Deactivate();
+            Service.Deactivate();
         }
     }
 }

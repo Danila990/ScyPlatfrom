@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace MyCode
@@ -29,19 +30,19 @@ namespace MyCode
 
             if (Input.GetKeyDown(KeyCode.D))
             {
-                _eventBus.Invoke(new InputSignal(DirectionType.Right, new Vector2Int(1, 0)));
+                _eventBus.Invoke(new MoveInfo(DirectionType.Right, new Vector2Int(1, 0)));
             }
             else if (Input.GetKeyDown(KeyCode.A))
             {
-                _eventBus.Invoke(new InputSignal(DirectionType.Left, new Vector2Int(-1, 0)));
+                _eventBus.Invoke(new MoveInfo(DirectionType.Left, new Vector2Int(-1, 0)));
             }
             else if (Input.GetKeyDown(KeyCode.W))
             {
-                _eventBus.Invoke(new InputSignal(DirectionType.Up, new Vector2Int(0, 1)));
+                _eventBus.Invoke(new MoveInfo(DirectionType.Up, new Vector2Int(0, 1)));
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                _eventBus.Invoke(new InputSignal(DirectionType.Down, new Vector2Int(0, -1)));
+                _eventBus.Invoke(new MoveInfo(DirectionType.Down, new Vector2Int(0, -1)));
             }
         }
     }

@@ -18,8 +18,9 @@ namespace MyCode
 
         public void OnInitPlayer()
         {
-            CreatePlayer();
-            PlayerPlatfrom = ServiceLocator.Instance.Get<GridController>().GetPlayerPlatfrom();
+            PlayerPlatfrom = ServiceLocator.Instance.Get<Grid>().GetPlayerPlatfrom();
+            Player = Factory.Instance.Create<Player>("Player");
+            Player.Initialize(PlayerPlatfrom.GridIndex);
             SetupStartPlayerPos();
         }
 
@@ -36,12 +37,6 @@ namespace MyCode
         public void OnPauseGame()
         {
 
-        }
-
-        public void CreatePlayer()
-        {
-            Player = Factory.Instance.Create<Player>("Player");
-            Player.Initialize();
         }
 
         private void SetupStartPlayerPos()

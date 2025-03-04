@@ -121,5 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba06fbed4879b0342b144bb80bcc460f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <platformType>k__BackingField: 1
-  <isCanMove>k__BackingField: 1
+  <PlatformType>k__BackingField: 1
+  <IsCanMove>k__BackingField: 1

@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace MyCode
 {
-    public class GridCreator
+    public static class GridCreator
     {
-        public Platform[][] CreateGrid(LevelSetting levelSetting)
+        public static Platform[][] CreateGrid(LevelSetting levelSetting)
         {
             Factory factory = Factory.Instance;
             PlatformType[][] platfromTypes = ConverGrid(levelSetting.GridLinesArray);
@@ -22,6 +22,7 @@ namespace MyCode
                     string namePlatform = $"Platform_{platfromTypes[x][y]}";
                     Vector3 position = new Vector3(x * platformOffset, 0, y * platformOffset) - spawnOffset;
                     Platform platform = factory.Create<Platform>(namePlatform, position);
+                    platform.SetupPlatform(new Vector2Int(x, y));
                     platform.transform.parent = gridParrent;
                     platforms[x][y] = platform;
                 }
@@ -29,7 +30,7 @@ namespace MyCode
             return platforms;
         }
 
-        private PlatformType[][] ConverGrid(GridLine[] gridLines)
+        private static PlatformType[][] ConverGrid(GridLine[] gridLines)
         {
             PlatformType[][] platforms = new PlatformType[gridLines.Length][];
             for (int i = 0; i < gridLines.Length; i++)
@@ -43,13 +44,13 @@ namespace MyCode
             return platforms;
         }
 
-        private Vector2Int CalculateGridSize(PlatformType[][] platfromTypes)
+        private static Vector2Int CalculateGridSize(PlatformType[][] platfromTypes)
         {
             int maxValue = platfromTypes.OrderByDescending(innerArray => innerArray.Length).First().Length;
             return new Vector2Int(platfromTypes.Length, maxValue);
         }
 
-        private Vector3 CalculateMiddleOffest(float platformOffset, Vector2Int gridSize)
+        private static Vector3 CalculateMiddleOffest(float platformOffset, Vector2Int gridSize)
         {
             float gridWidth = gridSize.x * platformOffset - platformOffset;
             float gridHeight = gridSize.y * platformOffset - platformOffset;

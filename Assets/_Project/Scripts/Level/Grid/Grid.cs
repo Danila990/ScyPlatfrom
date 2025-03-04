@@ -1,4 +1,3 @@
-using MyCode.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,15 +5,12 @@ using UnityEngine;
 
 namespace MyCode
 {
-    public class GridController : IService
+    public class Grid : IService
     {
-        public readonly GridCreator GridCreator;
-
         private Platform[][] _platforms;
 
-        public GridController()
+        public Grid()
         {
-            GridCreator = new GridCreator();
             EventBus.Instance.Subscribe(ConstSignal.INITIALIZE, OnInitGrid, 10);
         }
 
@@ -26,7 +22,10 @@ namespace MyCode
 
         public bool CheckPlatform(Vector2Int platformIndex)
         {
-            if (_platforms.Length < platformIndex.x || _platforms[platformIndex.x].Length < platformIndex.y)
+            if (platformIndex.x < 0 || platformIndex.y < 0)
+                return false;
+
+            if (_platforms.Length <= platformIndex.x || _platforms[platformIndex.x].Length <= platformIndex.y)
                 return false;
 
             return true;
@@ -44,7 +43,7 @@ namespace MyCode
         {
             var foundPlatforms = _platforms
             .SelectMany(platformArray => platformArray)
-            .Where(platform => platform.platformType == targetType)
+            .Where(platform => platform.PlatformType == targetType)
             .ToList();
 
             return foundPlatforms;
@@ -54,7 +53,7 @@ namespace MyCode
         {
             var firstPlatform = _platforms
             .SelectMany(platformArray => platformArray)
-            .FirstOrDefault(platform => platform.platformType == PlatformType.Player);
+            .FirstOrDefault(platform => platform.PlatformType == PlatformType.Player);
 
             return firstPlatform;
         }

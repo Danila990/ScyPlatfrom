@@ -1,4 +1,4 @@
-﻿namespace MyCode.Services
+﻿namespace MyCode
 {
     public enum InputServiceType
     {
