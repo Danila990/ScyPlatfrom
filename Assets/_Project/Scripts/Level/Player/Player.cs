@@ -43,6 +43,12 @@ namespace MyCode
             if (_gridController.CheckPlatform(nextIndex))
             {
                 Platform platform = _gridController.GetPlatform(nextIndex);
+                if (!platform.IsCanMove)
+                {
+                    _nextDirectionType = _playerRotator.CurrentDirection;
+                    return;
+                }
+
                 _playerRotator.RotateToDirection(_nextDirectionType);
                 _playerMover.StartMove(platform.transform.position);
                 _currentIndex = nextIndex;
