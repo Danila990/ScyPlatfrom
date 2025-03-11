@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using DG.Tweening;
 
-namespace MyCode
+namespace Code
 {
     public class MoveComponent : MonoBehaviour
     {

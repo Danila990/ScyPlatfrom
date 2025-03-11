@@ -2,18 +2,18 @@ using System.Collections.Generic;
 using System;
 using UnityEditor;
 using UnityEngine;
-using static MyCode.LevelSetting;
+using static Code.GridSetting;
 
-namespace MyCode 
+namespace Code 
 {
-    [CustomEditor(typeof(LevelSetting))]
+    [CustomEditor(typeof(GridSetting))]
     public class EnumArraySOEditor : Editor
     {
-        private LevelSetting _gridSetting;
+        private GridSetting _gridSetting;
 
         public override void OnInspectorGUI()
         {
-            _gridSetting = (LevelSetting)target;
+            _gridSetting = (GridSetting)target;
             base.OnInspectorGUI();
             LabelFieldText();
 
@@ -91,7 +91,7 @@ namespace MyCode
         private void LabelFieldTextSizeGrid()
         {
             Vector2Int sizeGrid = new Vector2Int(_gridSetting.GridLinesArray.Length, _gridSetting.GridLinesArray[0].Line.Length);
-            EditorGUILayout.LabelField($"Size Grid: X - {sizeGrid.x}, Y - {sizeGrid.y}");
+            EditorGUILayout.LabelField($"Size GridCreator: X - {sizeGrid.x}, Y - {sizeGrid.y}");
         }
 
         private void AddLineButton()
@@ -164,7 +164,7 @@ namespace MyCode
 
             };
 
-            EditorGUILayout.LabelField("Platfroms Grid", centeredStyle);
+            EditorGUILayout.LabelField("Platfroms GridCreator", centeredStyle);
         }
 
         private void InitGrid()

@@ -1,4 +1,4 @@
-namespace MyCode
+namespace Code
 {
     public enum PlatformType
     {

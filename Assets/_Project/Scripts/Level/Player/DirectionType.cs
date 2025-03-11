@@ -1,5 +1,5 @@
 
-namespace MyCode
+namespace Code
 {
     public enum DirectionType
     {

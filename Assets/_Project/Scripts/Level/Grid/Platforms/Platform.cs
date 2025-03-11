@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MyCode
+namespace Code
 {
     public class Platform : MonoBehaviour
     {

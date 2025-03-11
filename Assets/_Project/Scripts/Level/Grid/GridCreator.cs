@@ -1,18 +1,28 @@
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
-namespace MyCode
+namespace Code
 {
-    public static class GridCreator
+    public class GridCreator : MonoBehaviour
     {
-        public static Platform[][] CreateGrid(LevelSetting levelSetting)
+        private Factory _factory;
+        private GridSetting _levelSetting;
+        private Platform[][] _platforms;
+
+        [Inject]
+        public void Construct(Factory factory, GridSetting gridSetting)
         {
-            Factory factory = Factory.Instance;
-            PlatformType[][] platfromTypes = ConverGrid(levelSetting.GridLinesArray);
+            _factory = factory;
+            _levelSetting = gridSetting;
+        }
+
+        public Platform[][] CreateGrid()
+        {
+            PlatformType[][] platfromTypes = ConverGrid();
             Vector2Int gridSize = CalculateGridSize(platfromTypes);
-            float platformOffset = levelSetting.PlatformOffset;
+            float platformOffset = _levelSetting.PlatformOffset;
             Vector3 spawnOffset = CalculateMiddleOffest(platformOffset, gridSize);
-            Transform gridParrent = new GameObject("Grid").transform;
             Platform[][] platforms = new Platform[gridSize.x][];
             for (int x = 0; x < gridSize.x; x++)
             {
@@ -21,17 +31,26 @@ namespace MyCode
                 {
                     string namePlatform = $"Platform_{platfromTypes[x][y]}";
                     Vector3 position = new Vector3(x * platformOffset, 0, y * platformOffset) - spawnOffset;
-                    Platform platform = factory.Create<Platform>(namePlatform, position);
+                    Platform platform = _factory.Create<Platform>(namePlatform, position);
                     platform.SetupPlatform(new Vector2Int(x, y));
-                    platform.transform.parent = gridParrent;
+                    platform.transform.parent = transform;
                     platforms[x][y] = platform;
                 }
             }
             return platforms;
         }
 
-        private static PlatformType[][] ConverGrid(GridLine[] gridLines)
+        public Platform[][] GetGrid()
         {
+            if (_platforms == null)
+                return CreateGrid();
+
+            return _platforms;
+        }
+
+        private PlatformType[][] ConverGrid()
+        {
+            GridLine[] gridLines = _levelSetting.GridLinesArray;
             PlatformType[][] platforms = new PlatformType[gridLines.Length][];
             for (int i = 0; i < gridLines.Length; i++)
             {
@@ -44,13 +63,13 @@ namespace MyCode
             return platforms;
         }
 
-        private static Vector2Int CalculateGridSize(PlatformType[][] platfromTypes)
+        private Vector2Int CalculateGridSize(PlatformType[][] platfromTypes)
         {
             int maxValue = platfromTypes.OrderByDescending(innerArray => innerArray.Length).First().Length;
             return new Vector2Int(platfromTypes.Length, maxValue);
         }
 
-        private static Vector3 CalculateMiddleOffest(float platformOffset, Vector2Int gridSize)
+        private Vector3 CalculateMiddleOffest(float platformOffset, Vector2Int gridSize)
         {
             float gridWidth = gridSize.x * platformOffset - platformOffset;
             float gridHeight = gridSize.y * platformOffset - platformOffset;

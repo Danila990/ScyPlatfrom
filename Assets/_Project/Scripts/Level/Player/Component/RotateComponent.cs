@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyCode
+namespace Code
 {
     public class RotateComponent : MonoBehaviour
     {
